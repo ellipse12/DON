@@ -25,12 +25,12 @@ RBRACK	src/parser.cpp	/^    RBRACK$/;"	e	enum:TokenType	file:
 Scanner	src/parser.cpp	/^struct Scanner{$/;"	s	file:
 Token	src/parser.cpp	/^struct Token{$/;"	s	file:
 TokenType	src/parser.cpp	/^enum TokenType{$/;"	g	file:
-assign	src/parser.cpp	/^void assign(Scanner* scanner, EDNObject* document){$/;"	f	typeref:typename:void
+assign	src/parser.cpp	/^void assign(Scanner* scanner, DONObject* document){$/;"	f	typeref:typename:void
 clean	Makefile	/^clean:$/;"	t
 consume	src/parser.cpp	/^    Token consume(){$/;"	f	struct:Scanner	typeref:typename:Token	file:
 cursor	src/parser.cpp	/^    int cursor;$/;"	m	struct:Scanner	typeref:typename:int	file:
 expect	src/parser.cpp	/^    Token expect(TokenType type){$/;"	f	struct:Scanner	typeref:typename:Token	file:
-expr	src/parser.cpp	/^EDNValue* expr(Scanner* scanner){$/;"	f	typeref:typename:EDNValue *
+expr	src/parser.cpp	/^DONValue* expr(Scanner* scanner){$/;"	f	typeref:typename:DONValue *
 files	Makefile	/^files := $(subst src, build, $(patsubst %.cpp, %.o, $(wildcard $(src)\/*.cpp)))$/;"	m
 flags	Makefile	/^flags=-g $(incl)$/;"	m
 get	src/parser.cpp	/^    Token get(){$/;"	f	struct:Scanner	typeref:typename:Token	file:
@@ -44,7 +44,7 @@ main	src/main.cpp	/^int main(int argc, char* argv[]){$/;"	f	typeref:typename:int
 next_if	src/parser.cpp	/^    bool next_if(TokenType type){$/;"	f	struct:Scanner	typeref:typename:bool	file:
 object	include/EON.h	/^    std::unordered_map<std::string, EDNValue*> object;$/;"	m	struct:EDNObject	typeref:typename:std::unordered_map<std::string,EDNValue * >
 out	Makefile	/^out=out$/;"	m
-parse	src/parser.cpp	/^void parse(std::string input, EDNObject* document){$/;"	f	typeref:typename:void
+parse	src/parser.cpp	/^void parse(std::string input, DONObject* document){$/;"	f	typeref:typename:void
 peek	src/parser.cpp	/^    Token peek(){$/;"	f	struct:Scanner	typeref:typename:Token	file:
 pprint	src/pretty_print.cpp	/^std::string pprint(EDNObject* object){$/;"	f	typeref:typename:std::string
 pprint	src/pretty_print.cpp	/^std::string pprint(EDNValue object){$/;"	f	typeref:typename:std::string
@@ -55,5 +55,5 @@ src	Makefile	/^src=src$/;"	m
 tokens	src/parser.cpp	/^    std::vector<Token> tokens;$/;"	m	struct:Scanner	typeref:typename:std::vector<Token>	file:
 type	src/parser.cpp	/^    TokenType type;$/;"	m	struct:Token	typeref:typename:TokenType	file:
 value	include/EON.h	/^    std::variant<long, double, std::string, bool, EDNNull, EDNObject*> value;$/;"	m	struct:EDNValue	typeref:typename:std::variant<long,double,std::string,bool,EDNNull,EDNObject * >
-value	src/parser.cpp	/^    EDNValue value;$/;"	m	struct:Token	typeref:typename:EDNValue	file:
-writes	src/parser.cpp	/^EDNObject* writes(std::string input){$/;"	f	typeref:typename:EDNObject *
+value	src/parser.cpp	/^    DONValue value;$/;"	m	struct:Token	typeref:typename:DONValue	file:
+writes	src/parser.cpp	/^DONObject* writes(std::string input){$/;"	f	typeref:typename:DONObject *

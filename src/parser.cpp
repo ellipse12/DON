@@ -17,7 +17,7 @@ enum TokenType{
 
 struct Token{
     TokenType type;
-    EDNValue value;
+    DONValue value;
     int line;
 };
 
@@ -42,7 +42,7 @@ std::vector<Token> lex(std::string input){
             }else if(temp.compare("false") == 0){
                 tokens.push_back(Token{LITERAL, false, line});
             }else if(temp.compare("null") == 0){
-                tokens.push_back(Token{LITERAL, EDNNull{}, line});
+                tokens.push_back(Token{LITERAL, DONNull{}, line});
             }else{
                 tokens.push_back(Token{ID, temp, line});
             }
@@ -50,7 +50,7 @@ std::vector<Token> lex(std::string input){
             i = k;
             continue;
         }
-        if(std::isdigit(static_cast<unsigned char>(input[i])) || input[i] == '.'){
+        if(std::isdigit(static_cast<unsigned char>(input[i])) || input[i] == '.' || input[i] == '-'){
             std::string temp = "";
             bool is_float = false;
             while(std::isdigit(static_cast<unsigned char>(input[i])) || input[i] == '.'){
@@ -72,9 +72,9 @@ std::vector<Token> lex(std::string input){
         }
 
         switch (input[i]){
-            case '=': tokens.push_back(Token{ASSIGN, EDNNull{}}); break;
-            case '{': tokens.push_back(Token{LBRACK, EDNNull{}}); break;
-            case '}': tokens.push_back(Token{RBRACK, EDNNull{}}); break;
+            case '=': tokens.push_back(Token{ASSIGN, DONNull{}}); break;
+            case '{': tokens.push_back(Token{LBRACK, DONNull{}}); break;
+            case '}': tokens.push_back(Token{RBRACK, DONNull{}}); break;
             case '\"': {
                            int k = i + 1;
                            std::string temp = "";
@@ -107,8 +107,8 @@ std::string print_token(Token token){
     std::string type = print_token_type(token.type);
     std::string out = "";
     out += "{\n    \"" + type + "\", ";
-    EDNValue value = token.value;
-    if(std::holds_alternative<EDNNull>(value.value)){
+    DONValue value = token.value;
+    if(std::holds_alternative<DONNull>(value.value)){
         out += "null\n";
     }else if(std::holds_alternative<long>(value.value)){
         out += std::to_string(std::get<long>(value.value)) + "\n";
@@ -159,36 +159,36 @@ struct Scanner{
 };
 
 
-EDNValue* expr(Scanner* scanner);
+DONValue* expr(Scanner* scanner);
 
-void assign(Scanner* scanner, EDNObject* document){
+void assign(Scanner* scanner, DONObject* document){
     if(scanner->is_next(ID)){
         std::string id = std::get<std::string>(scanner->consume().value.value);
         scanner->expect(ASSIGN);
         document->object.insert_or_assign(id, expr(scanner));
     }
 }
-EDNValue* expr(Scanner* scanner){
+DONValue* expr(Scanner* scanner){
     if(scanner->next_if(LBRACK)){
-        EDNObject* out = new EDNObject;
+        DONObject* out = new DONObject;
         while(!scanner->is_next(RBRACK)) assign(scanner, out);
         scanner->expect(RBRACK);
-        EDNValue* out2 = new EDNValue();
+        DONValue* out2 = new DONValue();
         out2->value = out;
         return out2;
     }
-    EDNValue* outt = new EDNValue{scanner->consume().value};
+    DONValue* outt = new DONValue{scanner->consume().value};
     return outt;
 
 }
 
-EDNObject* writes(std::string input){
-    EDNObject* out = new EDNObject;
+DONObject* writes(std::string input){
+    DONObject* out = new DONObject;
     parse(input, out);
     return out;
 }
 
-void parse(std::string input, EDNObject* document){
+void parse(std::string input, DONObject* document){
     std::vector<Token> tokens = lex(input);
     Scanner scanner{0, tokens};
     while(scanner.has_next())

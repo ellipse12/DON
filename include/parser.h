@@ -1,5 +1,5 @@
 #pragma once
-#include "EDN.h"
+#include "DON.h"
 #include <string>
-void parse(std::string input, EDNObject* document);
-EDNObject* writes(std::string input);
+void parse(std::string input, DONObject* document);
+DONObject* writes(std::string input);

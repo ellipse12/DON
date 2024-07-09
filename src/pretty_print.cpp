@@ -1,7 +1,7 @@
 #include "pretty_print.h"
 #include <iostream>
 #include <map>
-std::string pprint(EDNObject* object){
+std::string pprint(DONObject* object){
     std::string out = "";
     auto obj = object->object; 
     out += "{";
@@ -11,10 +11,10 @@ std::string pprint(EDNObject* object){
     out += "}";
     return out;
 }
-std::string pprint(EDNValue object){
+std::string pprint(DONValue object){
     std::string out = "";
-    EDNValue value = object;
-    if(std::holds_alternative<EDNNull>(value.value)){
+    DONValue value = object;
+    if(std::holds_alternative<DONNull>(value.value)){
         out += "null";
     }else if(std::holds_alternative<long>(value.value)){
         out += std::to_string(std::get<long>(value.value));
@@ -24,8 +24,8 @@ std::string pprint(EDNValue object){
         out += std::get<std::string>(value.value);
     }else if(std::holds_alternative<bool>(value.value)){
         out += std::get<bool>(value.value) ? "true" : "false";
-    }else if(std::holds_alternative<EDNObject*>(value.value)){
-        out += pprint(std::get<EDNObject*>(value.value));
+    }else if(std::holds_alternative<DONObject*>(value.value)){
+        out += pprint(std::get<DONObject*>(value.value));
     }
     return out;
 }

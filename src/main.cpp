@@ -1,4 +1,4 @@
-#include "EDN.h"
+#include "DON.h"
 #include "parser.h"
 #include <iostream>
 #include <fstream>
@@ -11,7 +11,7 @@ int main(int argc, char* argv[]){
     std::stringstream data;
     std::ifstream in(argv[1]);
     data << in.rdbuf();
-    EDNObject* object = writes(data.str() + "\0");
+    DONObject* object = writes(data.str() + "\0");
     std::cout << pprint(object) << std::endl;
     return 0;
 }
