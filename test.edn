@@ -1,0 +1,11 @@
+a = {
+  b = 2
+  kwf123 = 14.
+  f1 = .324
+  f2 = 0.0
+  f3 = null
+  f5 = "Hello, World"
+}
+c = true
+b = false
+b = 1
