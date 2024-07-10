@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-
+*tags*
 #build
 build/
 # Compiled Object files

@@ -21,7 +21,6 @@ struct Token{
     int line;
 };
 
-
 std::vector<Token> lex(std::string input){
     std::string temp = "";
     std::vector<Token> tokens;
@@ -32,9 +31,9 @@ std::vector<Token> lex(std::string input){
             continue;
         }
         if(std::isspace(static_cast<unsigned char>(input[i]))){continue;}
-        if(std::isalpha(static_cast<unsigned char>(input[i]))){
+        if(std::isalpha(static_cast<unsigned char>(input[i])) || input[i] == '_'){
             int k = i;
-            while(isalnum(static_cast<unsigned char>(input[k]))){
+            while(isalnum(static_cast<unsigned char>(input[k])) || input[k] == '_' || input[k] == '-'){
                 temp += input[k++];
             }
             if(temp.compare("true") == 0){
@@ -53,6 +52,11 @@ std::vector<Token> lex(std::string input){
         if(std::isdigit(static_cast<unsigned char>(input[i])) || input[i] == '.' || input[i] == '-'){
             std::string temp = "";
             bool is_float = false;
+            int negative = 1;
+            if(input[i] == '-'){
+                negative = -1;
+                i++;
+            }
             while(std::isdigit(static_cast<unsigned char>(input[i])) || input[i] == '.'){
                 if(input[i] == '.' && !is_float){
                     is_float = true;
@@ -62,10 +66,11 @@ std::vector<Token> lex(std::string input){
                 }
                 temp += input[i++];
             }
+            
             if(is_float){
-                tokens.push_back(Token{LITERAL, stof(temp), line});
+                tokens.push_back(Token{LITERAL, negative * stof(temp), line});
             }else{
-                tokens.push_back(Token{LITERAL, stol(temp), line});
+                tokens.push_back(Token{LITERAL, negative * stol(temp), line});
             }
             continue;
         
