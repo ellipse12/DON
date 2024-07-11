@@ -174,6 +174,8 @@ std::string print_token_type(TokenType ttype){
         case ASSIGN: type = "="; break;
         case LBRACK: type = "{"; break;
         case RBRACK: type = "}"; break;
+        case PREDIR: type = "DIRECTIVE"; break;
+        case INDIR: type = "INFIXDIRECTIVE"; break;
     }
     return type;
 }
@@ -266,7 +268,10 @@ DONObject* writes(std::string input){
 void parse(std::string input, DONObject* document){
     std::vector<Token> tokens = lex(input);
     Scanner scanner{0, tokens};
-    while(scanner.has_next())
-        assign(&scanner, document);
+    for(Token token: tokens){
+        std::cout << print_token(token) << std::endl;
+    }
+    //while(scanner.has_next())
+        //assign(&scanner, document);
    
 }

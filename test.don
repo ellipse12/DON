@@ -14,4 +14,3 @@ l. = "test";
 hex = 0xaf
 bin = 0b0101011
 oct = 0o0012
-#def TAU
