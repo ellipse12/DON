@@ -45,6 +45,9 @@ next_if	src/parser.cpp	/^    bool next_if(TokenType type){$/;"	f	struct:Scanner	
 object	include/DON.h	/^    std::unordered_map<std::string, DONValue*> object;$/;"	m	struct:DONObject	typeref:typename:std::unordered_map<std::string,DONValue * >
 out	Makefile	/^out=out$/;"	m
 parse	src/parser.cpp	/^void parse(std::string input, DONObject* document){$/;"	f	typeref:typename:void
+parse_bin	src/parser.cpp	/^long parse_bin(std::string input, int* i){$/;"	f	typeref:typename:long
+parse_hex	src/parser.cpp	/^long parse_hex(std::string input, int* i){$/;"	f	typeref:typename:long
+parse_octal	src/parser.cpp	/^long parse_octal(std::string input, int* i){$/;"	f	typeref:typename:long
 peek	src/parser.cpp	/^    Token peek(){$/;"	f	struct:Scanner	typeref:typename:Token	file:
 pprint	src/pretty_print.cpp	/^std::string pprint(DONObject* object){$/;"	f	typeref:typename:std::string
 pprint	src/pretty_print.cpp	/^std::string pprint(DONValue object){$/;"	f	typeref:typename:std::string

@@ -10,3 +10,6 @@ a = {
 c = true
 b = false
 b = 1
+hex = 0xaf
+bin = 0b0101011
+oct = 0o0012

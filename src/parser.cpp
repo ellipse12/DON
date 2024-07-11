@@ -21,6 +21,37 @@ struct Token{
     int line;
 };
 
+
+
+long parse_hex(std::string input, int* i){
+    int current = *i;
+    std::string temp = "";
+    while(std::isxdigit(input[current])){
+        temp += input[current++];
+        std::cout << input[current];
+    }
+    *i = current;
+    return std::stol(temp.c_str(), 0, 16);
+}
+long parse_octal(std::string input, int* i){
+    int current = *i;
+    std::string temp = "";
+    while(input[current] >= '0' && input[current] <= '7'){
+        temp += input[current++];
+    }
+    *i = current;
+    return std::stol(temp.c_str(), 0, 8);
+}
+long parse_bin(std::string input, int* i){
+    int current = *i;
+    std::string temp = "";
+    while(input[current] == '0' || input[current] == '1'){
+        temp += input[current++];
+    }
+    *i = current;
+    return std::stol(temp.c_str(), 0, 2);
+}
+
 std::vector<Token> lex(std::string input){
     std::string temp = "";
     std::vector<Token> tokens;
@@ -29,6 +60,9 @@ std::vector<Token> lex(std::string input){
         if(input[i] == '\n'){
             line++;
             continue;
+        }
+        if(input[i] == '/' && input[i+1] == '/'){
+            while(input[++i] != '\n'){}
         }
         if(std::isspace(static_cast<unsigned char>(input[i]))){continue;}
         if(std::isalpha(static_cast<unsigned char>(input[i])) || input[i] == '_'){
@@ -56,6 +90,26 @@ std::vector<Token> lex(std::string input){
             if(input[i] == '-'){
                 negative = -1;
                 i++;
+            }
+            if(input[i] == '0'){
+                switch(input[i + 1]){
+                    case 'x': {
+                        i += 2;
+                        tokens.push_back(Token{LITERAL, parse_hex(input, &i)});
+                        continue;
+                    }
+                    case 'o': {
+                        i += 2;
+                        tokens.push_back(Token{LITERAL, parse_octal(input, &i)});
+                        continue;
+                    }
+                    case 'b': {
+                        i += 2;
+                        tokens.push_back(Token{LITERAL, parse_bin(input, &i)});
+                        continue;
+                    }
+                }
+                continue;
             }
             while(std::isdigit(static_cast<unsigned char>(input[i])) || input[i] == '.'){
                 if(input[i] == '.' && !is_float){
