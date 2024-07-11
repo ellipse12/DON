@@ -11,8 +11,9 @@ enum TokenType{
     ASSIGN,
 //  ARRAY,
     LBRACK,
-    RBRACK
-//    DIRECTIVE
+    RBRACK,
+    INDIR,
+    PREDIR
 };
 
 struct Token{
@@ -28,7 +29,6 @@ long parse_hex(std::string input, int* i){
     std::string temp = "";
     while(std::isxdigit(input[current])){
         temp += input[current++];
-        std::cout << input[current];
     }
     *i = current;
     return std::stol(temp.c_str(), 0, 16);
@@ -57,14 +57,30 @@ std::vector<Token> lex(std::string input){
     std::vector<Token> tokens;
     int line = 0;
     for(int i = 0; i < input.size(); i++){
+        std::cout << input[]
         if(input[i] == '\n'){
             line++;
             continue;
         }
         if(input[i] == '/' && input[i+1] == '/'){
             while(input[++i] != '\n'){}
+            line++;
+            continue;
         }
         if(std::isspace(static_cast<unsigned char>(input[i]))){continue;}
+        if(input[i] == '#' || input[i] == '~'){
+            std::string temp = "";
+            TokenType out = PREDIR;
+            if(input[i] == '~'){
+                out = INDIR;
+            }
+            i++;
+            while(!std::isspace(static_cast<unsigned char>(input[i]))){
+                temp += input[i++];
+            }
+            tokens.push_back(Token{out, temp, line});
+            continue;
+        }
         if(std::isalpha(static_cast<unsigned char>(input[i])) || input[i] == '_'){
             int k = i;
             while(isalnum(static_cast<unsigned char>(input[k])) || input[k] == '_' || input[k] == '-'){

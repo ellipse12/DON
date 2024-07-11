@@ -19,9 +19,11 @@ DONNull	include/DON.h	/^struct DONNull{};$/;"	s
 DONObject	include/DON.h	/^struct DONObject{$/;"	s
 DONValue	include/DON.h	/^struct DONValue{$/;"	s
 ID	src/parser.cpp	/^    ID,$/;"	e	enum:TokenType	file:
+INDIR	src/parser.cpp	/^    INDIR,$/;"	e	enum:TokenType	file:
 LBRACK	src/parser.cpp	/^    LBRACK,$/;"	e	enum:TokenType	file:
 LITERAL	src/parser.cpp	/^    LITERAL,$/;"	e	enum:TokenType	file:
-RBRACK	src/parser.cpp	/^    RBRACK$/;"	e	enum:TokenType	file:
+PREDIR	src/parser.cpp	/^    PREDIR$/;"	e	enum:TokenType	file:
+RBRACK	src/parser.cpp	/^    RBRACK,$/;"	e	enum:TokenType	file:
 Scanner	src/parser.cpp	/^struct Scanner{$/;"	s	file:
 Token	src/parser.cpp	/^struct Token{$/;"	s	file:
 TokenType	src/parser.cpp	/^enum TokenType{$/;"	g	file:
