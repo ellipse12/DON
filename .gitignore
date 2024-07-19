@@ -8,7 +8,7 @@ build/
 *.lo
 *.o
 *.obj
-
+*ccls*
 # Precompiled Headers
 *.gch
 *.pch
@@ -32,3 +32,4 @@ build/
 *.exe
 *.out
 *.app
+compile_commands.json

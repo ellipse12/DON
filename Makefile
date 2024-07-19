@@ -1,7 +1,7 @@
 CC=g++
 build=build
 incl:=-Iinclude/ 
-flags=-g $(incl)
+flags=-g -std=c++20 $(incl)
 src=src
 out=out
 libs := 

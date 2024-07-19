@@ -5,7 +5,7 @@
 <prefix> ::= "#" <id> <expr>
 <infix> ::= <expr> "~" <expr>
 <id> ::= ("_" | [a-z] | [A-Z]) "-" ([a-z] | [A-Z] | "_")
-<literal> ::= <number> | <string> | <bool> | "null" | "{" <expr> "}"
+<literal> ::= <number> | <string> | <bool> | "null" | "[" (<literal>* "," | <literal>) ]" | "{" <expr> "}"
 <number> ::= <int> | <float> | <hex> | <octal> | <binary>
 <int> ::= "-"? [1-9] [0-9]*
 <float> ::= <int> "." [0-9]* | "." [0-9]* | <int> "."
