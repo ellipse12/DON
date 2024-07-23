@@ -19,9 +19,5 @@ nothing = null
 hex = 0x080fa
 oct = 0o12
 bin = 0b0100110
-//directive example. ~* is also a directive but in infix form. Directives can be any
-//symbol other than # (prefix) and ~(infix). infix can only take two arguments.
-//Inner directives are evaluated before outer ones.
-//Directives are defined progromatically by the processor.
-//def is a inbuilt directive that preforms string substitution wherever it sees TAU
 //#def TAU 2 ~* "obj.PI"
+#test "Hello, World!";

@@ -15,6 +15,7 @@ enum TokenType{
     RSQ,
     PREDIR,
     COMMA,
+    SEMICOLON,
     NONE
 };
 struct Token{
@@ -82,6 +83,7 @@ std::vector<Token> lex(std::string input){
             case '[': tokens.push_back(Token{LSQ, DONNull{}}); continue;
             case ']': tokens.push_back(Token{RSQ, DONNull{}}); continue;
             case ',': tokens.push_back(Token{COMMA, DONNull{}}); continue;
+            case ';': tokens.push_back(Token{SEMICOLON, DONNull{}}); continue;
             case '\"': {
                            int k = i + 1;
                            std::string temp = "";
@@ -189,6 +191,7 @@ std::string print_token_type(TokenType ttype){
         case COMMA: type = ","; break;
         case PREDIR: type = "DIRECTIVE"; break;
         case NONE: type = "NONE"; break;
+        case SEMICOLON: type = ";"; break;
     }
     return type;
 }
@@ -218,7 +221,7 @@ std::string print_token(Token token){
 struct Scanner{
     int cursor;
     std::vector<Token> tokens;
-    DONObject* replacements;
+    DONContext* ctx;
     Token peek(){
         return tokens.at(cursor);
     }
@@ -292,9 +295,14 @@ DONValue* literal(Scanner* scanner){
 void directive(Scanner* scanner, DONObject* document){
     if(scanner->is_next(PREDIR)){
         std::string id = std::get<std::string>(scanner->consume().value.value);
-        DONObject* values = new DONObject;
-        values->object.insert_or_assign(id, literal(scanner));
-        
+        std::vector<DONValue> values({});
+        while(!scanner->is_next(SEMICOLON)){
+            values.emplace_back(*literal(scanner));
+        }
+        scanner->expect(SEMICOLON);
+        scanner->ctx->get_directive(id).func(document, values.size(), values.data(), scanner->ctx->replacements);
+
+     
     }
 }
 void assign(Scanner* scanner, DONObject* document){
@@ -303,9 +311,9 @@ void assign(Scanner* scanner, DONObject* document){
     document->object.insert_or_assign(id, literal(scanner));
 }
 
-void parse(std::string input, DONObject* document){
+void parse(std::string input, DONObject* document, DONContext* ctx){
     std::vector<Token> tokens = lex(input);
-    Scanner* scanner = new Scanner{0, tokens, new DONObject};
+    Scanner* scanner = new Scanner{0, tokens, ctx};
     //for(Token token: tokens){
         //std::cout << print_token(token) << std::endl;
     //}
@@ -313,8 +321,8 @@ void parse(std::string input, DONObject* document){
         expr(scanner, document);
    
 }
-DONObject* writes(std::string input){
+DONObject* writes(std::string input, DONContext* ctx){
     DONObject* out = new DONObject;
-    parse(input, out);
+    parse(input, out, ctx);
     return out;
 }
