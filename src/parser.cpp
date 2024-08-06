@@ -5,6 +5,7 @@
 #include <iostream>
 #include "pretty_print.h"
 #include <sstream>
+#include <locale>
 enum TokenType{
     LITERAL,
     ID,
@@ -93,7 +94,7 @@ std::vector<Token> lex(std::string input){
                            if(input[k] == '\n') line++;
                            tokens.push_back(Token{LITERAL, temp, line});
                            i = k;
-                           break;
+                           continue;
                        }
         }
         if(std::isspace(static_cast<unsigned char>(input[i]))){continue;}
@@ -107,10 +108,10 @@ std::vector<Token> lex(std::string input){
             tokens.push_back(Token{out, temp, line});
             continue;
         }
-        if(std::isalpha(static_cast<unsigned char>(input[i])) || input[i] == '_'){
+        if(std::isalpha(input[i], std::locale("en_US.UTF8")) || input[i] == '_'){
             std::string temp = "";
             int k = i;
-            while(isalnum(static_cast<unsigned char>(input[k])) || input[k] == '_' || input[k] == '-'){
+            while(isalnum(input[k], std::locale("en_US.UTF8")) || input[k] == '_' || input[k] == '-'){
                 temp += input[k++];
             }
             if(temp.compare("true") == 0){
@@ -171,9 +172,10 @@ std::vector<Token> lex(std::string input){
             }
             i--;
             continue;
+        }else{
+            std::cout << "Unkown character: " << input[i] << std::endl;   
+            throw ("Unkown character"); 
         }
-
-        
     }
     return tokens;
 }
@@ -305,8 +307,20 @@ void directive(Scanner* scanner, DONObject* document){
      
     }
 }
+
+void replace(Scanner* scanner, DONObject* document, std::string name){
+    
+}
+
 void assign(Scanner* scanner, DONObject* document){
+    if(scanner->is_next(PREDIR)){
+        directive(scanner, document);
+    }
     std::string id = std::get<std::string>(scanner->expect(ID).value.value);
+    if(scanner->ctx->contains_replacement(id)){
+        replace(scanner, document, id);
+        return;
+    } 
     scanner->expect(ASSIGN);
     document->object.insert_or_assign(id, literal(scanner));
 }

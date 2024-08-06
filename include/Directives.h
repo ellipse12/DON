@@ -12,5 +12,6 @@ struct DONContext{
     DONValue* get_replacement(std::string name);
     void add_replacement(std::string, DONValue* value);
     void remove_replacement(std::string name);
+    bool contains_replacement(std::string name);
     Directive get_directive(std::string name);
 };

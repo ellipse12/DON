@@ -21,3 +21,4 @@ oct = 0o12
 bin = 0b0100110
 //#def TAU 2 ~* "obj.PI"
 #test "Hello, World!";
+☢ = "unicode test"

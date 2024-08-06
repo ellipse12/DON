@@ -1,10 +1,8 @@
 <DON> ::= <expr>*
 <expr> ::= <assign> | <directive> 
 <assign> ::= <id> "=" <literal>
-<directive> ::= <prefix> | <infix>
-<prefix> ::= "#" <id> <expr>
-<infix> ::= <expr> "~" <expr>
-<id> ::= ("_" | [a-z] | [A-Z]) "-" ([a-z] | [A-Z] | "_")
+<directive> ::= "#" <id> <expr>
+<id> ::= [*] 
 <literal> ::= <number> | <string> | <bool> | "null" | "[" (<literal>* "," | <literal>) ]" | "{" <expr> "}"
 <number> ::= <int> | <float> | <hex> | <octal> | <binary>
 <int> ::= "-"? [1-9] [0-9]*
